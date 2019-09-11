@@ -1,30 +1,89 @@
 <template>
     <div id="app">
-        <message default-message="hej" @add:message="addMessage" />
-        <list :items="messages" />
+        <employeeForm @add:employee="addEmployee" />
+        <employeeTable
+            :employees="employees"
+            @delete:employee="deleteEmployee"
+            @edit:employee="editEmployee"
+        />
     </div>
 </template>
 
 <script>
-import message from './components/message.vue';
-import list from './components/list.vue';
+import employeeForm from './components/employeeForm.vue';
+import employeeTable from './components/employeeTable.vue';
 
 export default {
     name: 'app',
     components: {
-        message,
-        list,
+        employeeForm,
+        employeeTable,
     },
     data() {
         return {
-            messages: Array,
-            test: String,
+            employees: [],
         };
     },
-
+    mounted() {
+        this.getEmployees();
+    },
     methods: {
-        addMessage(item) {
-            this.messages.push(item);
+        async getEmployees() {
+            try {
+                const response = await fetch('https://jsonplaceholder.typicode.com/users', {
+                    method: 'GET',
+                });
+                const data = await response.json();
+                this.employees = data;
+            } catch (err) {
+                console.error(err);
+            }
+        },
+
+
+        async addEmployee(employee) {
+            try {
+                const response = await fetch('https://jsonplaceholder.typicode.com/users', {
+                    method: 'POST',
+                    body: JSON.stringify(employee),
+                    headers: {
+                        'Content-type': 'application/json; charset=UTF-8',
+                    },
+                });
+                const data = await response.json();
+                this.employees = [...this.employees, data];
+            } catch (err) {
+                console.error(err);
+            }
+        },
+
+        async deleteEmployee(id) {
+            try {
+                await fetch(`https://jsonplaceholder.typicode.com/users/${id}`, {
+                    method: 'DELETE',
+                });
+
+                this.employees = this.employees.filter(employee => employee.id !== id);
+            } catch (err) {
+                console.error(err);
+            }
+        },
+
+        async editEmployee(employee) {
+            try {
+                const response = await fetch(`https://jsonplaceholder.typicode.com/users/${employee.id}`, {
+                    method: 'PUT',
+                    body: JSON.stringify(employee),
+                    headers: {
+                        'Content-type': 'application/json; charset=UTF-8',
+                    },
+                });
+
+                const data = await response.json();
+                this.employees[this.employees.indexOf(employee)] = data;
+            } catch (err) {
+                console.error(err);
+            }
         },
     },
 };
