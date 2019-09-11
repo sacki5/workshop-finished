@@ -1,18 +1,32 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+    <div id="app">
+        <message default-message="hej" @add:message="addMessage" />
+        <list :items="messages" />
+    </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue';
+import message from './components/message.vue';
+import list from './components/list.vue';
 
 export default {
-  name: 'app',
-  components: {
-    HelloWorld,
-  },
+    name: 'app',
+    components: {
+        message,
+        list,
+    },
+    data() {
+        return {
+            messages: Array,
+            test: String,
+        };
+    },
+
+    methods: {
+        addMessage(item) {
+            this.messages.push(item);
+        },
+    },
 };
 </script>
 
@@ -21,7 +35,6 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
   margin-top: 60px;
 }
