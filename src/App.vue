@@ -30,7 +30,7 @@ export default {
     methods: {
         async getEmployees() {
             try {
-                const response = await fetch('https://jsonplaceholder.typicode.com/users', {
+                const response = await fetch('https://5d7f689015404800142245d4.mockapi.io/isac', {
                     method: 'GET',
                 });
                 const data = await response.json();
@@ -43,7 +43,7 @@ export default {
 
         async addEmployee(employee) {
             try {
-                const response = await fetch('https://jsonplaceholder.typicode.com/users', {
+                const response = await fetch('https://5d7f689015404800142245d4.mockapi.io/isac', {
                     method: 'POST',
                     body: JSON.stringify(employee),
                     headers: {
@@ -59,7 +59,7 @@ export default {
 
         async deleteEmployee(id) {
             try {
-                await fetch(`https://jsonplaceholder.typicode.com/users/${id}`, {
+                await fetch(`https://5d7f689015404800142245d4.mockapi.io/isac/${id}`, {
                     method: 'DELETE',
                 });
 
@@ -71,7 +71,7 @@ export default {
 
         async editEmployee(employee) {
             try {
-                const response = await fetch(`https://jsonplaceholder.typicode.com/users/${employee.id}`, {
+                const response = await fetch(`https://5d7f689015404800142245d4.mockapi.io/isac/${employee.id}`, {
                     method: 'PUT',
                     body: JSON.stringify(employee),
                     headers: {

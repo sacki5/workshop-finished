@@ -10,7 +10,7 @@
                 <td v-else>{{ employee.name}}</td>
 
                 <td v-if="employee.id === edit"><input v-model="employee.email" /></td>
-                <td>{{ employee.email}}</td>
+                <td v-else>{{ employee.email}}</td>
 
                 <td>
                     <button v-if="employee.id === edit" @click="editEmployee(employee)">
